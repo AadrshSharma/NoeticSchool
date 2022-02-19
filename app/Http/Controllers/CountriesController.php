@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Countries;
+use App\Models\Skills;
 use Illuminate\Http\Request;
 
 class CountriesController extends Controller
@@ -12,9 +13,12 @@ class CountriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function skill()
     {
         //
+        $data = Skills::all();
+        return response()->json(['data' => $data]);
+
     }
 
     /**
@@ -22,8 +26,10 @@ class CountriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function country()
     {
+        $data = Countries::all();
+        return response()->json(['data' => $data]);
         //
     }
 

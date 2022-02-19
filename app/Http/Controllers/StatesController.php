@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\States;
 use Illuminate\Http\Request;
+use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class StatesController extends Controller
 {
@@ -12,9 +13,12 @@ class StatesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function state($id)
     {
+        $data = States::where('co_id',$id)->get();
+        return response()->json(['data'=> $data]);
         //
+
     }
 
     /**

@@ -23,7 +23,7 @@
           <label  class="block mb-1 text-gray-600 font-semibold">Country</label>
             <select v-model="country" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                 <option selected value="">Select One</option>
-                <option v-for="item in optionCountry" :value="item.id" :key="item.id">{{ item.country_name }}</option>
+                <option v-for="item in optionCountry" :value="item.id" :key="item.id">{{ item.country}}</option>
                 </select>
         </div>
 
@@ -31,14 +31,14 @@
           <label class="block mb-1 text-gray-600 font-semibold">State</label>
             <select v-model="state" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                 <option selected value="">Select One</option>
-                <option v-for="item in optionState" :value="item.id" :key="item.id">{{ item.country_name }}</option>
+                <option v-for="item in optionState" :value="item.id" :key="item.id">{{ item.state}}</option>
                 </select>
         </div>
         <div>
           <label for="email" class="block mb-1 text-gray-600 font-semibold">City</label>
            <select v-model="city" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                 <option selected value="">Select One</option>
-                <option v-for="item in optionCity" :value="item.id" :key="item.id">{{ item.country_name }}</option>
+                <option v-for="item in optionCity" :value="item.id" :key="item.id">{{ item.city}}</option>
                 </select>
         </div>
         <div>
@@ -81,7 +81,52 @@ data(){
             optionCity:[],
     }
 },
-
+methods:{
+  fetchData(){
+     axios.post('/api/country/').then(response => {
+             if(response.status === 200) {
+                 this.optionCountry = response.data.data
+             
+                 }
+               })
+                 axios.post('/api/skill/').then(response => {
+             if(response.status === 200) {
+                 this.optionSkill = response.data.data.map(a => ({
+                     value: a.id,
+                     label: a.name
+                 }))
+             
+                    }
+                 })
+          },
+  fetchState(){
+    axios.post('/api/state/'+ this.country).then(response => {
+                   if(response.status === 200) {
+                  this.optionState = response.data.data
+             
+                 }
+        })
+  },
+  fetchCity(){
+    axios.post('/api/city/'+ this.state).then(response => {
+                   if(response.status === 200) {
+                  this.optionCity = response.data.data
+             
+                 }
+        })
+  } 
+},
+created(){
+  this.fetchData();
+},
+watch:{
+  'country':{
+    handler:'fetchState'
+  },
+  'state':{
+    handler:'fetchCity'
+  }
+}
 
 
 }

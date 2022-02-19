@@ -21347,6 +21347,56 @@ __webpack_require__.r(__webpack_exports__);
       optionState: [],
       optionCity: []
     };
+  },
+  methods: {
+    fetchData: function fetchData() {
+      var _this = this;
+
+      axios.post('/api/country/').then(function (response) {
+        if (response.status === 200) {
+          _this.optionCountry = response.data.data;
+        }
+      });
+      axios.post('/api/skill/').then(function (response) {
+        if (response.status === 200) {
+          _this.optionSkill = response.data.data.map(function (a) {
+            return {
+              value: a.id,
+              label: a.name
+            };
+          });
+        }
+      });
+    },
+    fetchState: function fetchState() {
+      var _this2 = this;
+
+      axios.post('/api/state/' + this.country).then(function (response) {
+        if (response.status === 200) {
+          _this2.optionState = response.data.data;
+        }
+      });
+    },
+    fetchCity: function fetchCity() {
+      var _this3 = this;
+
+      axios.post('/api/city/' + this.state).then(function (response) {
+        if (response.status === 200) {
+          _this3.optionCity = response.data.data;
+        }
+      });
+    }
+  },
+  created: function created() {
+    this.fetchData();
+  },
+  watch: {
+    'country': {
+      handler: 'fetchState'
+    },
+    'state': {
+      handler: 'fetchCity'
+    }
   }
 }); // tailwind.config.js
 
@@ -26222,7 +26272,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: item.id,
       key: item.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.country_name), 9
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.country), 9
     /* TEXT, PROPS */
     , _hoisted_10);
   }), 128
@@ -26239,7 +26289,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: item.id,
       key: item.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.country_name), 9
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.state), 9
     /* TEXT, PROPS */
     , _hoisted_13);
   }), 128
@@ -26256,7 +26306,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: item.id,
       key: item.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.country_name), 9
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.city), 9
     /* TEXT, PROPS */
     , _hoisted_16);
   }), 128

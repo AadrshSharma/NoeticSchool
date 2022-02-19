@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\CitiesController;
+use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\NoeticSchoolController;
+use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\StatesController;
 use App\Models\Noetic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +26,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('noetic/create',[NoeticSchoolController::class,'create']);
 Route::post('noetic/list',[NoeticSchoolController::class,'search']);
 Route::post('/noetic/update',[NoeticSchoolController::class,'updated']);
+Route::post('country',[CountriesController::class,'country']);
+Route::post('state/{id}',[StatesController::class,'state']);
+Route::post('city/{id}',[CitiesController::class,'city']);
+Route::post('skill',[CountriesController::class,'skill']);
+
+

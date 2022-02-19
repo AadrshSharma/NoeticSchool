@@ -12,9 +12,11 @@ class CitiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function city($id)
     {
         //
+        $data = Cities::where('s_id',$id)->get();
+        return response()->json(['data'=> $data]);
     }
 
     /**
