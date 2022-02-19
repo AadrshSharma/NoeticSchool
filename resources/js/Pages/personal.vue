@@ -8,14 +8,17 @@
         <div>
           <label  class="block mb-1 text-gray-600 font-semibold">Username</label>
           <input v-model="name" type="text" class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full" />
+          <span v-if="errors.name" class="text-xs text-red-500 py-1">{{ errors.name[0] }}</span>
         </div>
         <div>
           <label  class="block mb-1 text-gray-600 font-semibold">Email</label>
           <input v-model="email" type="text" class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full" />
+          <span v-if="errors.email" class="text-xs text-red-500 py-1">{{ errors.email[0] }}</span>
         </div>
         <div>
           <label class="block mb-1 text-gray-600 font-semibold">Phone</label>
           <input v-model="phone" type="text" class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full" />
+          <span v-if="errors.phone" class="text-xs text-red-500 py-1">{{ errors.phone[0] }}</span>
 
         </div>
         </div>
@@ -25,6 +28,8 @@
                 <option selected value="">Select One</option>
                 <option v-for="item in optionCountry" :value="item.id" :key="item.id">{{ item.country}}</option>
                 </select>
+          <span v-if="errors.country" class="text-xs text-red-500 py-1">{{ errors.country[0] }}</span>
+
         </div>
 
         <div>
@@ -33,6 +38,8 @@
                 <option selected value="">Select One</option>
                 <option v-for="item in optionState" :value="item.id" :key="item.id">{{ item.state}}</option>
                 </select>
+          <span v-if="errors.state" class="text-xs text-red-500 py-1">{{ errors.state[0] }}</span>
+
         </div>
         <div>
           <label for="email" class="block mb-1 text-gray-600 font-semibold">City</label>
@@ -40,6 +47,8 @@
                 <option selected value="">Select One</option>
                 <option v-for="item in optionCity" :value="item.id" :key="item.id">{{ item.city}}</option>
                 </select>
+          <span v-if="errors.city" class="text-xs text-red-500 py-1">{{ errors.city[0] }}</span>
+
         </div>
         <div>
           <label for="email" class="block mb-1 text-gray-600 font-semibold">Skills</label>
@@ -52,9 +61,11 @@
                     :searchable="true"
                     :createTag="true"
                     />
-                </div>       
+                </div> 
+                <span v-if="errors.skills" class="text-xs text-red-500 py-1">{{ errors.skills[0] }}</span>
+      
                 </div>
-      <button class="mt-4 w-full bg-yellow-500 font-semibold py-2 rounded-md  tracking-wide">Register</button>
+      <button type="submit"  @click.prevent="submit" class="mt-4 w-full bg-yellow-500 font-semibold py-2 rounded-md  tracking-wide">Register</button>
     </div>
   </form>
 </div>
@@ -79,6 +90,7 @@ data(){
             optionCountry:[],
             optionState:[],
             optionCity:[],
+            errors:{}
     }
 },
 methods:{
@@ -114,7 +126,28 @@ methods:{
              
                  }
         })
-  } 
+  } ,
+  submit(){
+    const payload={
+      name:this.name,
+      email:this.email,
+      phone:this.phone,
+      country_id:this.country,
+      state_id:this.state,
+      city_id:this.city,
+      skills2:this.multiselect_example
+    }
+    axios.post('api/create',payload).then(response =>{
+      if(response.status === 200){
+                   // this.$inertia.get('view');
+                }
+      }).catch((error) => {
+                    if (error.response.status === 422){
+                        this.errors = error.response.data.errors
+                    }
+                    
+                })
+    }
 },
 created(){
   this.fetchData();

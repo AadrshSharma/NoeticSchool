@@ -13,7 +13,7 @@ class CountriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function skill()
+    public function skills()
     {
         //
         $data = Skills::all();

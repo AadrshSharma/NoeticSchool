@@ -29,6 +29,8 @@ Route::post('/noetic/update',[NoeticSchoolController::class,'updated']);
 Route::post('country',[CountriesController::class,'country']);
 Route::post('state/{id}',[StatesController::class,'state']);
 Route::post('city/{id}',[CitiesController::class,'city']);
-Route::post('skill',[CountriesController::class,'skill']);
+Route::post('skill',[CountriesController::class,'skills']);
+Route::post('create',[PersonalController::class,'created']);
+
 
 

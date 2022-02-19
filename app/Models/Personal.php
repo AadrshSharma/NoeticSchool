@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Personal extends Model
 {
     use HasFactory;
-    protected $table = 'personal';
+    protected $table = 'personals';
     protected $guarded = [];
-    public function skills(){
+    public function skills0(){
         return $this->belongsToMany(Skills::class,'user_skills','user_id','skill_id');
     }
 }

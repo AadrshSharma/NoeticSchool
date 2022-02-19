@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PersonalRequest;
+use App\Http\Requests\PersonalStoreRequest;
 use App\Models\Personal;
 use Illuminate\Http\Request;
 
@@ -12,9 +14,14 @@ class PersonalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function created(PersonalStoreRequest $request)
     {
         //
+        $data = $request->only('name','email','phone','country_id','state_id','city_id');
+        $created = Personal::create($data);
+        $created->skills0()->attach(collect($request->skills2));
+        return response()->json(['data' => 'created'], 200);
+
     }
 
     /**
