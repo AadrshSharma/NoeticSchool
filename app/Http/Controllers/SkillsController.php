@@ -2,37 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Noetic;
+use App\Models\Skills;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class NoeticController extends Controller
+class SkillsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-   public function stu()
+    public function index()
     {
         //
-        return Inertia::render('create');
-    }
-    public function view()
-    {
-        //
-        return Inertia::render('view');
-    }
-    public function personal()
-    {
-        //
-        return Inertia::render('personal');
-    }
-    public function updated($id)
-    {
-        //
-        $data = Noetic::where('id', $id)->first();
-        return Inertia::render('update', ['page' => $data]);
     }
 
     /**
@@ -59,10 +41,10 @@ class NoeticController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Noetic  $noetic
+     * @param  \App\Models\Skills  $skills
      * @return \Illuminate\Http\Response
      */
-    public function show(Noetic $noetic)
+    public function show(Skills $skills)
     {
         //
     }
@@ -70,10 +52,10 @@ class NoeticController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Noetic  $noetic
+     * @param  \App\Models\Skills  $skills
      * @return \Illuminate\Http\Response
      */
-    public function edit(Noetic $noetic)
+    public function edit(Skills $skills)
     {
         //
     }
@@ -82,10 +64,10 @@ class NoeticController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Noetic  $noetic
+     * @param  \App\Models\Skills  $skills
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Noetic $noetic)
+    public function update(Request $request, Skills $skills)
     {
         //
     }
@@ -93,10 +75,10 @@ class NoeticController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Noetic  $noetic
+     * @param  \App\Models\Skills  $skills
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Noetic $noetic)
+    public function destroy(Skills $skills)
     {
         //
     }

@@ -31,3 +31,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::get('/create',[NoeticController::class,'stu']);
 Route::get('/view',[NoeticController::class,'view']);
+Route::get('/updated/{id}',[NoeticController::class,'updated']);
+Route::get('/personal',[NoeticController::class,'personal']);///////dataview
+

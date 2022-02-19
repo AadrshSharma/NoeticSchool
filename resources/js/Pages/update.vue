@@ -14,7 +14,7 @@
                       <label  >password</label><br/>
                       <input  v-model="password" class="w-full rounded" type="text" placeholder="enter your password" >
                     </div>
-                     <div class="mt-1">
+                     <!-- <div class="mt-1">
                       <label  >select optionHobbies</label><br/>
                        <div>
                       <Multiselect
@@ -25,7 +25,7 @@
                        />
                      </div>
                     </div>
-                  
+                   -->
                    
 
  
@@ -45,33 +45,51 @@ import axios from 'axios'
  import Multiselect from '@vueform/multiselect'
  export default {
   components: { Multiselect },
-    name:"create",
+    name:"update",
+    props:['page'],
     data(){
         return{
             name:'',
             password:'',
-            multiselect_example:[],
-            tags:'tags',
-            options: [
-            { value: 'batman', label: 'Batman' },
-            { value: 'robin', label: 'Robin' },
-            { value: 'joker', label: 'Joker' },
-           ]
+            c_id:''
+        //     multiselect_example:[],
+        //     tags:'tags',
+        //     options: [
+        //     { value: 'batman', label: 'Batman' },
+        //     { value: 'robin', label: 'Robin' },
+        //     { value: 'joker', label: 'Joker' },
+        //    ]
         }
         
         },
         methods:{
             submit(){
                 const payload = {
+                    id: this.c_id,
                     name:this.name,
                     password:this.password
                 }
-                axios.post('/api/noetic/create',payload).then(response =>{
+                axios.post('/api/noetic/update',payload).then(response =>{
                     if(response.status === 200){
-                        this.$inertia.get('/view');
+                      this.$inertia.get('/view');
                     }
                 })
             }
+        }, 
+         created(){
+            // console.log(this.page)
+            this.c_id = this.page.id
+            this.name = this.page.name
+            this.password = this.page.password
+            
+            // this.mobile = this.page.mobile
+            // this.age = this.page.age
+            // this.email = this.page.email
+            // this.password = this.page.password
+            // this.address = this.page.address
+            // this.city = this.page.city
+            // this.state = this.page.state
+            // this.pincode = this.page.pincode
         }
 }
 </script>

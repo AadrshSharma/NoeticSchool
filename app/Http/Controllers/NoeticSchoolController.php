@@ -17,5 +17,14 @@ class NoeticSchoolController extends Controller
         $created = Noetic::create($data);
         return response()->json(['data' => 'created'], 200);
      }
+     public function updated(Request $request){
 
+        $student = Noetic::where('id', $request->id)->first();
+
+        $data = $request->only('name','password');
+
+        $student->update($data);
+
+        return response()->json(['data' => 'updated'], 200);
+    }
 }

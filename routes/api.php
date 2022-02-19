@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('noetic/create',[NoeticSchoolController::class,'create']);
 Route::post('noetic/list',[NoeticSchoolController::class,'search']);
+Route::post('/noetic/update',[NoeticSchoolController::class,'updated']);
