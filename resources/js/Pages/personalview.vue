@@ -17,7 +17,7 @@
             </label>
              <select v-model="country" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                 <option selected value="">Select One</option>
-                <option v-for="item in optionCountry" :value="item.id" :key="item.id">{{ item.country_name }}</option>
+                <option v-for="item in optionCountry" :value="item.id" :key="item.id">{{ item.country }}</option>
                 </select>
             </div>
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -27,7 +27,7 @@
             <div class="relative">
                 <select v-model="state" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                 <option selected value="">Select one</option>
-                <option v-for="item in optionState" :value="item.id" :key="item.id">{{ item.state_name}}</option>
+                <option v-for="item in optionState" :value="item.id" :key="item.id">{{ item.state}}</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -40,7 +40,7 @@
             </label>
             <select v-model="city" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                <option selected value="">Select one</option>
-                <option v-for="item in optionCity" :value="item.id" :key="item.id">{{ item.city_name}}</option>
+                <option v-for="item in optionCity" :value="item.id" :key="item.id">{{ item.city}}</option>
 
                 </select>
             </div>
@@ -197,15 +197,47 @@ export default {
 
      },
      methods: {
+         fetchData(){
+     axios.post('/api/country/').then(response => {
+             if(response.status === 200) {
+                 this.optionCountry = response.data.data
+             
+                 }
+               })
+                 axios.post('/api/skill/').then(response => {
+             if(response.status === 200) {
+                 this.optionSkill = response.data.data.map(a => ({
+                     value: a.id,
+                     label: a.name
+                 }))
+             
+                    }
+                 })
+          },
+  fetchState(){
+    axios.post('/api/state/'+ this.country).then(response => {
+                   if(response.status === 200) {
+                  this.optionState = response.data.data
+             
+                 }
+        })
+  },
+  fetchCity(){
+    axios.post('/api/city/'+ this.state).then(response => {
+                   if(response.status === 200) {
+                  this.optionCity = response.data.data
+             
+                 }
+        })
+  } ,
         fetchList(){
     
             const payload = {
-                // search : this.search,
-                //  country_id: this.country,
-                // state_id: this.state,
-                // city_id:this.city,
-                // skills:this.multiselect_example,
-                // hobbies:this.hobbies
+              search : this.search,
+                 country_id: this.country,
+                state_id: this.state,
+                city_id:this.city,
+                skills:this.multiselect_example
             }
             axios.post('/api/view', payload).then(response => {
                 if(response.status === 200){
@@ -216,6 +248,28 @@ export default {
         },
         created(){
             this.fetchList()
+            this.fetchData()
+        },
+        watch:{
+            'search':{
+            handler: 'fetchList'
+            },
+        
+            country: function(){
+                this.fetchState();
+                this.fetchList();
+            },
+             state: function(){
+                this.fetchCity();
+                this.fetchList();
+            },
+             'city':{
+                  handler:'fetchList'
+             },
+
+            'multiselect_example':{
+                handler:'fetchList'
+            }
         }
 }
 </script>

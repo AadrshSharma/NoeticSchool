@@ -21469,25 +21469,82 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    fetchList: function fetchList() {
+    fetchData: function fetchData() {
       var _this = this;
 
-      var payload = {// search : this.search,
-        //  country_id: this.country,
-        // state_id: this.state,
-        // city_id:this.city,
-        // skills:this.multiselect_example,
-        // hobbies:this.hobbies
+      axios.post('/api/country/').then(function (response) {
+        if (response.status === 200) {
+          _this.optionCountry = response.data.data;
+        }
+      });
+      axios.post('/api/skill/').then(function (response) {
+        if (response.status === 200) {
+          _this.optionSkill = response.data.data.map(function (a) {
+            return {
+              value: a.id,
+              label: a.name
+            };
+          });
+        }
+      });
+    },
+    fetchState: function fetchState() {
+      var _this2 = this;
+
+      axios.post('/api/state/' + this.country).then(function (response) {
+        if (response.status === 200) {
+          _this2.optionState = response.data.data;
+        }
+      });
+    },
+    fetchCity: function fetchCity() {
+      var _this3 = this;
+
+      axios.post('/api/city/' + this.state).then(function (response) {
+        if (response.status === 200) {
+          _this3.optionCity = response.data.data;
+        }
+      });
+    },
+    fetchList: function fetchList() {
+      var _this4 = this;
+
+      var payload = {
+        search: this.search,
+        country_id: this.country,
+        state_id: this.state,
+        city_id: this.city,
+        skills: this.multiselect_example
       };
       axios.post('/api/view', payload).then(function (response) {
         if (response.status === 200) {
-          _this.tableData = response.data;
+          _this4.tableData = response.data;
         }
       });
     }
   },
   created: function created() {
     this.fetchList();
+    this.fetchData();
+  },
+  watch: {
+    'search': {
+      handler: 'fetchList'
+    },
+    country: function country() {
+      this.fetchState();
+      this.fetchList();
+    },
+    state: function state() {
+      this.fetchCity();
+      this.fetchList();
+    },
+    'city': {
+      handler: 'fetchList'
+    },
+    'multiselect_example': {
+      handler: 'fetchList'
+    }
   }
 });
 
@@ -26744,7 +26801,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: item.id,
       key: item.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.country_name), 9
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.country), 9
     /* TEXT, PROPS */
     , _hoisted_12);
   }), 128
@@ -26761,7 +26818,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: item.id,
       key: item.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.state_name), 9
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.state), 9
     /* TEXT, PROPS */
     , _hoisted_17);
   }), 128
@@ -26778,7 +26835,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: item.id,
       key: item.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.city_name), 9
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.city), 9
     /* TEXT, PROPS */
     , _hoisted_22);
   }), 128

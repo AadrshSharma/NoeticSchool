@@ -34,11 +34,38 @@ class PersonalController extends Controller
     {
         //
         // $data = Personal::all();
+        // return PersonalStoreResource::collection(
+        //     Personal::get()
+        // );
         return PersonalStoreResource::collection(
-            Personal::get()
-        );
+            Personal::when($request->search, function($q) use($request){
+            $q->where(function ($q) use($request) {
+                $q->where('name','like','%'.$request->search.'%');
+                                   
+            }); 
+        })
+        ->when( $request->country_id , function ($q) use($request){
+            $q->where('country_id' ,$request->country_id);
+            
+        })
+        ->when( $request->state_id , function ($q) use($request){
+            $q->where('state_id' ,$request->state_id);
+
+        })
+        ->when( $request->city_id , function ($q) use($request){
+            $q->where('city_id' ,$request->city_id);
+            
+        })
+        ->when(request('skills0'), function ($q) {
+            $q->whereHas('skills0', function ($q) {
+                $q->whereIn('skills.id', collect(request('skills')));
+            });
+        })
+        ->get()
+     );
         // return response()->json(['data' => $data], 200);
 
+        
     }
 
     /**
