@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PersonalRequest;
+// use App\Http\Requests\PersonalRequest;
 use App\Http\Requests\PersonalStoreRequest;
+use App\Http\Resources\PersonalStoreResource;
 use App\Models\Personal;
 use Illuminate\Http\Request;
 
@@ -32,8 +33,11 @@ class PersonalController extends Controller
     public function view(Request $request)
     {
         //
-        $data = Personal ::all();
-        return response()->json(['data' => $data], 200);
+        // $data = Personal::all();
+        return PersonalStoreResource::collection(
+            Personal::get()
+        );
+        // return response()->json(['data' => $data], 200);
 
     }
 
