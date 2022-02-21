@@ -10,5 +10,6 @@ class Noetic extends Model
     use HasFactory;
     protected $table = 'noetics';
     protected $guarded = [];
+    
 
 }

@@ -19,7 +19,7 @@ class PersonalController extends Controller
         //
         $data = $request->only('name','email','phone','country_id','state_id','city_id');
         $created = Personal::create($data);
-        $created->skills0()->attach(collect($request->skills2));
+        $created->skills0()->attach(collect($request->skills));
         return response()->json(['data' => 'created'], 200);
 
     }
@@ -29,9 +29,12 @@ class PersonalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function view(Request $request)
     {
         //
+        $data = Personal ::all();
+        return response()->json(['data' => $data], 200);
+
     }
 
     /**

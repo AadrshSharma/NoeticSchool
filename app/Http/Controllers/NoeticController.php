@@ -40,9 +40,10 @@ class NoeticController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function personalv()
     {
         //
+        return Inertia::render('personalview');
     }
 
     /**

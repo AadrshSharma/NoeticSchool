@@ -28,7 +28,7 @@
                 <option selected value="">Select One</option>
                 <option v-for="item in optionCountry" :value="item.id" :key="item.id">{{ item.country}}</option>
                 </select>
-          <span v-if="errors.country" class="text-xs text-red-500 py-1">{{ errors.country[0] }}</span>
+          <span v-if="errors.country_id" class="text-xs text-red-500 py-1">{{ errors.country_id[0] }}</span>
 
         </div>
 
@@ -38,7 +38,7 @@
                 <option selected value="">Select One</option>
                 <option v-for="item in optionState" :value="item.id" :key="item.id">{{ item.state}}</option>
                 </select>
-          <span v-if="errors.state" class="text-xs text-red-500 py-1">{{ errors.state[0] }}</span>
+          <span v-if="errors.state_id" class="text-xs text-red-500 py-1">{{ errors.state_id[0] }}</span>
 
         </div>
         <div>
@@ -47,7 +47,7 @@
                 <option selected value="">Select One</option>
                 <option v-for="item in optionCity" :value="item.id" :key="item.id">{{ item.city}}</option>
                 </select>
-          <span v-if="errors.city" class="text-xs text-red-500 py-1">{{ errors.city[0] }}</span>
+          <span v-if="errors.city_id" class="text-xs text-red-500 py-1">{{ errors.city_id[0] }}</span>
 
         </div>
         <div>
@@ -135,11 +135,11 @@ methods:{
       country_id:this.country,
       state_id:this.state,
       city_id:this.city,
-      skills2:this.multiselect_example
+      skills:this.multiselect_example
     }
     axios.post('api/create',payload).then(response =>{
       if(response.status === 200){
-                   // this.$inertia.get('view');
+                   this.$inertia.get('personalv');
                 }
       }).catch((error) => {
                     if (error.response.status === 422){

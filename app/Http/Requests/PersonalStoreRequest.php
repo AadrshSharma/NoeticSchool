@@ -28,9 +28,9 @@ class PersonalStoreRequest extends FormRequest
             'name'=>'required',
             'email'=>'required',
             'phone'=>'required',
-            'country'=>'required',
-            'state'=>'required',
-            'city'=>'required',
+            'country_id'=>'required',
+            'state_id'=>'required',
+            'city_id'=>'required',
             'skills'=>'required',
 
         ];

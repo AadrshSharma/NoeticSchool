@@ -31,6 +31,4 @@ Route::post('state/{id}',[StatesController::class,'state']);
 Route::post('city/{id}',[CitiesController::class,'city']);
 Route::post('skill',[CountriesController::class,'skills']);
 Route::post('create',[PersonalController::class,'created']);
-
-
-
+Route::post('view',[PersonalController::class,'view']);
