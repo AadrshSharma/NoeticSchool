@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Noetic;
+use App\Models\Personal;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -33,6 +34,13 @@ class NoeticController extends Controller
         //
         $data = Noetic::where('id', $id)->first();
         return Inertia::render('update', ['page' => $data]);
+    }
+    public function edit($id)
+    {
+        //
+        $data = Personal::where('id', $id)->with('skills0')->first();
+        // $data->skills0()->attach(collect('user_id', $id));
+        return Inertia::render('edit', ['page' => $data]);
     }
 
     /**
@@ -74,10 +82,10 @@ class NoeticController extends Controller
      * @param  \App\Models\Noetic  $noetic
      * @return \Illuminate\Http\Response
      */
-    public function edit(Noetic $noetic)
-    {
-        //
-    }
+    // public function edit(Noetic $noetic)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.

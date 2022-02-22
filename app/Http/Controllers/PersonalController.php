@@ -57,8 +57,8 @@ class PersonalController extends Controller
             
         })
         ->when(request('skills'), function ($q) {
-            $q->whereHas('skills', function ($q) {
-                $q->whereIn('skill.id', collect(request('skills0')));
+            $q->whereHas('skills0', function ($q) {
+                $q->whereIn('skills.id', collect(request('skills')));
             });
         })
         ->get()

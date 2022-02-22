@@ -34,6 +34,7 @@ Route::get('/view',[NoeticController::class,'view']);
 Route::get('/updated/{id}',[NoeticController::class,'updated']);
 Route::get('/personal',[NoeticController::class,'personal']);///////dataview
 Route::get('personalv',[NoeticController::class,'personalv']);
+Route::get('edit/{id}',[NoeticController::class,'edit']);
 
 
 
