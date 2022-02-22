@@ -21521,6 +21521,18 @@ __webpack_require__.r(__webpack_exports__);
           _this4.tableData = response.data;
         }
       });
+    },
+    deleteData: function deleteData(id) {
+      var _this5 = this;
+
+      var payload = {
+        id: id
+      };
+      axios.post('/api/delete', payload).then(function (response) {
+        if (response.status === 200) {
+          _this5.fetchList();
+        }
+      });
     }
   },
   created: function created() {
@@ -26881,7 +26893,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_29), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: "#",
       onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-        return _ctx.deleteData(item.id);
+        return $options.deleteData(item.id);
       }, ["prevent"])
     }, _hoisted_34, 8
     /* PROPS */

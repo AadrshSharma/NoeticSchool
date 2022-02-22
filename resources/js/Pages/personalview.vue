@@ -233,7 +233,7 @@ export default {
         fetchList(){
     
             const payload = {
-              search : this.search,
+                 search : this.search,
                  country_id: this.country,
                 state_id: this.state,
                 city_id:this.city,
@@ -245,6 +245,18 @@ export default {
                 }
             })
         },
+        deleteData(id){
+            const payload ={
+                id:id
+            }
+             axios.post('/api/delete', payload).then(response => {
+                if(response.status === 200){
+                   this.fetchList();
+                }
+             })
+
+        }
+
         },
         created(){
             this.fetchList()

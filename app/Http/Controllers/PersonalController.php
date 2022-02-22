@@ -56,9 +56,9 @@ class PersonalController extends Controller
             $q->where('city_id' ,$request->city_id);
             
         })
-        ->when(request('skills0'), function ($q) {
-            $q->whereHas('skills0', function ($q) {
-                $q->whereIn('skills.id', collect(request('skills')));
+        ->when(request('skills'), function ($q) {
+            $q->whereHas('skills', function ($q) {
+                $q->whereIn('skill.id', collect(request('skills0')));
             });
         })
         ->get()
@@ -66,6 +66,10 @@ class PersonalController extends Controller
         // return response()->json(['data' => $data], 200);
 
         
+    }
+    public function delete(Request $request){
+        $data = Personal::where('id', $request->id)->first();
+        $data->delete();
     }
 
     /**
